@@ -1,0 +1,117 @@
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+public class DiGraph {
+
+	private LinkedList<Integer>[] AdjacencyList;
+
+	public DiGraph(int N) {
+		AdjacencyList = new LinkedList[N];
+		for(int i = 0; i < AdjacencyList.length; i++) {
+			AdjacencyList[i] = new LinkedList<Integer>();
+		}
+	}
+
+	public boolean addEdge(int from, int to) {
+		System.out.println("from -1: "+ (from-1) + "to: " + to);
+		if (from > 0 
+				&& from <= AdjacencyList.length) {
+			AdjacencyList[from - 1].add(
+					new Integer(to));
+			System.out.println("Successfuly added: (" + from + ", " + to +")");
+			return true;
+		}
+		else {
+			System.err.println("INPUT ERROR!");
+			System.out.println("Invalid input: (" + from + ", " + to +")");
+			return false;
+		}
+	}
+
+	public boolean deleteEdge(int from, int to) {
+		if (from > 0 
+				&& from <= AdjacencyList.length 
+				&& AdjacencyList[from].contains(to)) {
+			AdjacencyList[from - 1].remove(to);
+			System.out.println("Successfuly deleted: (" + from + ", " + to +")");
+			return true;
+		}
+		else {
+			System.err.println("INPUT ERROR!");
+			System.out.println("Invalid input: (" + from + ", " + to +")");
+			return false;
+		}
+	}
+
+	public int edgeCount() {
+		int count = 0;
+		for (LinkedList<Integer> l : AdjacencyList) {
+			count += l.size();
+		}
+		return count;
+	}
+
+	public int vertexCount() {
+		return AdjacencyList.length;
+	}
+
+	public void print() {
+		for (int i = 0; i < AdjacencyList.length; i++) {
+			System.out.print((i + 1) + " is connected to: ");
+			Iterator<Integer> it = AdjacencyList[i].iterator();
+			while (it.hasNext()) {
+				System.out.print(it.next());
+				if (it.hasNext())
+					System.out.print(", ");
+			}
+			System.out.println();
+		}
+	}
+	
+	private int[] indegrees(LinkedList<Integer>[] G) {
+		int N = G.length;
+		int[] IN = new int[N];
+		for (int u = 0; u < N; u++) {
+			for (Integer v : G[u]) {
+				IN[v-1] += 1;
+			}
+		}
+		
+		for (int i : IN) {
+			System.out.print(i +", ");
+		}
+		
+		return IN;
+	}
+	
+	public int[] topSort() {
+		int N = AdjacencyList.length;
+		int IN[] = indegrees(AdjacencyList);
+		int A[] = new int[N];
+		PriorityQueue<Integer> Q = new PriorityQueue<Integer>();
+		for (int u = 1; u <= N; u++) {
+			if (IN[u-1] == 0) {
+				Q.add(u);
+			}
+		}
+		int i = 0;
+		while (Q.peek() != null) {
+			int u = Q.remove();
+			A[i] = u;
+			i++;
+			for (Integer v: AdjacencyList[u]) {
+				IN[v-1] = IN[v-1] -1;
+				if (IN[v] == 0) {
+					Q.add(v);
+				}
+			}
+		}
+		for (int a : A) {
+			System.out.print(a +", ");
+		}
+		return A;
+	}
+	
+	
+}

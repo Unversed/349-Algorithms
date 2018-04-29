@@ -1,0 +1,91 @@
+import java.io.File;
+import java.util.Scanner;
+
+public class DiGraphTest {
+
+	public static void main(String[] args) throws Exception {
+		Scanner scan = new Scanner(/*System.in*/"Project5/src/test.txt");
+		System.out.println("Enter number of vertices:");
+		int numberVertices = scan.nextInt();
+		scan.nextLine();
+		DiGraph graph = new DiGraph(numberVertices);
+		System.out.println("Choose one of the following operations:");
+		System.out.println("- add edge (enter a)");
+		System.out.println("- delete edge (enter d)");
+		System.out.println("- edge count (enter e)");
+		System.out.println("- vertex count (enter v)");
+		System.out.println("- print graph (enter p)");
+		System.out.println("- quit (enter q)");
+		System.out.println("- topological sort (enter t)");
+		String input = scan.nextLine();
+		if (input.length() > 1) {
+			input = "fail";
+		}
+		while (true) {
+			int from, to;
+			switch (input) {
+			case "a":
+				System.out.println("enter from, enter to");
+				from = scan.nextInt();
+				to = scan.nextInt();
+				scan.nextLine();
+				graph.addEdge(from, to);
+				break;
+			case "d":
+				System.out.println("enter from, enter to");
+				from = scan.nextInt();
+				to = scan.nextInt();
+				scan.nextLine();
+				graph.deleteEdge(from, to);
+				break;
+			case "e":
+				System.out.println("The edge count is: " + graph.edgeCount());
+				break;
+			case "v":
+				System.out.println("The vertex count is: " + graph.vertexCount());
+				break;
+			case "p":
+				graph.print();
+				break;
+			case "q":
+				System.out.println("Goodbye");
+				System.exit(0);
+			case "t":
+				graph.topSort();
+				break;
+			case "i":
+				System.out.println("enter from, enter to");
+				from = scan.nextInt();
+				to = scan.nextInt();
+				scan.nextLine();
+				System.out.println(graph.isTherePath(from-1, to-1));
+				break;
+			case "l":
+				System.out.println("enter from, enter to");
+				from = scan.nextInt();
+				to = scan.nextInt();
+				scan.nextLine();
+				System.out.println(graph.lengthOfPath(from-1, to-1));
+				break;
+			case "s":
+				System.out.println("enter from, enter to");
+				from = scan.nextInt();
+				to = scan.nextInt();
+				scan.nextLine();
+				graph.printPath(from-1, to-1);
+				break;
+			default:
+				System.out.println("!!!Invalid Operation!!!");
+			}
+			input = scan.nextLine();
+			if (input.length() > 1) {
+				input = "fail";
+			}
+		}
+	}
+	
+	
+	
+	
+	
+}

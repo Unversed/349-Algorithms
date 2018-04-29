@@ -1,0 +1,41 @@
+/* Kyler Ramsey karamsey@calpoly.edu Liam Lefferts ljcates@calpoly.edu 3/2/2018 Project2 Matrix Multiplication Algorithms */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Tester {
+
+	static int[] C;
+	static int[] A;
+
+	public static void main(String[] args) {
+
+		int[] changeSet1 = { 100, 50, 25, 10, 5, 1 };
+		int[] changeSet2 = { 100, 50, 20, 15, 10, 5, 3, 2, 1 };
+		int[] changeSet3 = { 64, 32, 16, 8, 4, 2, 1 };
+		int[] changeSet4 = { 100, 50, 25, 10, 1 };
+		int[] changeSet5 = { 66, 35, 27, 18, 10, 1 };
+		int matches[] = new int[5];
+
+		ArrayList<int[]> changeList = new ArrayList<int[]>();
+		changeList.add(changeSet1);
+		changeList.add(changeSet2);
+		changeList.add(changeSet3);
+		changeList.add(changeSet4);
+		changeList.add(changeSet5);
+
+		for (int j = 1; j <= 200; j++) {
+			for (int i = 0; i <= 4; i++) {
+				int[] B = ChangeMaker.change_DP(j, changeList.get(i));
+				int[] C = ChangeMaker.change_greedy(j, changeList.get(i));
+				if (Arrays.equals(B, C)) {
+					matches[i] += 1;
+				}
+			}
+		}
+		System.out.println("Testing change_DP and change_greedy algorithms");
+		for (int i = 0; i < 5; i++) {
+			System.out.println("Testing set" + (i + 1) + ": " + matches[i] + " matches in 200 tests");
+		}
+	}
+}

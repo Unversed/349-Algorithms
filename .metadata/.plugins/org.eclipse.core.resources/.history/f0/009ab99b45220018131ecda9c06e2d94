@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class DiGraphTest {
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter number of vertices:");
+		int numberVertices = scan.nextInt();
+		DiGraph graph = new DiGraph(numberVertices);
+		System.out.println("Choose one of the following operations:");
+		System.out.println("- add edge (enter a)");
+		System.out.println("- delete edge (enter d)");
+		System.out.println("- edge count (enter e)");
+		System.out.println("- vertex count (enter v)");
+		System.out.println("- print graph (enter p)");
+		System.out.println("- Quit (enter q)");
+		String input = scan.next();
+		while (input != "q") {
+			int from, to;
+			switch (input) {
+			case "a":
+				System.out.println("enter from");
+				from = scan.nextInt();
+				System.out.println("enter to");
+				to = scan.nextInt();
+				graph.addEdge(from, to);
+				break;
+			case "d":
+				System.out.println("enter from");
+				from = scan.nextInt();
+				System.out.println("enter to");
+				to = scan.nextInt();
+				graph.addEdge(from, to);
+				graph.deleteEdge(from, to);
+				break;
+			case "e":
+				graph.edgeCount();
+				break;
+			case "v":
+				graph.vertexCount();
+			case "p":
+				graph.print();
+			case "q":
+				System.out.println("You have chosen to quit!");
+				System.exit(0);
+			default:
+				System.out.println("!!!Invalid Operation!!!");
+			}
+			System.out.println("Next Operation");
+			input = scan.next();
+		}
+	}
+	
+}
